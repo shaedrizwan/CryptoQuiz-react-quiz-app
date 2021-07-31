@@ -3,10 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router} from 'react-router-dom'
+import {QuizProvider} from './Contexts/quizContext'
+import { ScoreProvider } from './Contexts/scoreContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <ScoreProvider>
+        <QuizProvider>
+          <App />
+        </QuizProvider>
+      </ScoreProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
