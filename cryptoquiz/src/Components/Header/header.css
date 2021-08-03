@@ -2,22 +2,22 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
-    padding: 1rem;
+    padding: 0.3rem 1rem;
     background-color: #ececee;
 }
 
 .logo{
     justify-self: flex-start;
     margin-right: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     text-decoration: none;
     color: black;
-    font-weight: 600;
+    font-weight: bolder;
     font-size: 1.2rem;
 }
 
 .nav-items{
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     text-decoration: none;
     color: black;
     font-weight: 600;
