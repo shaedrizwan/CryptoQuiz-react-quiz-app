@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect,useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import {ServerError,QuizData} from '../Types/quizContext';
+import {ServerError,QuizData, QuizType} from '../Types/quizContext';
 
 export const QuizContext = createContext(undefined);
 
@@ -8,31 +8,33 @@ export function useQuiz(){
     return useContext(QuizContext)
 }
 
-export function QuizProvider({children}){
-
-    const [quiz,setQuiz] = useState<QuizData | undefined>()
-    const [error,setError] = useState<ServerError>()
-
-    const getQuiz = async() =>{
-        try{
-            const response = await axios.get<QuizData>('https://cryptoquiz-backend.herokuapp.com/quiz')
-            return response.data
-        }catch(error){
-            if(axios.isAxiosError(error)){
-                const serverError = (error as AxiosError<ServerError>)
-                if(serverError && serverError.response){
-                    return serverError.response.data
-                }
-            }else{
-                return {errorMessage:"Something went wrong"}
+export const getQuiz = async() =>{
+    try{
+        const response = await axios.get<QuizData>('https://cryptoquiz-backend.herokuapp.com/quiz')
+        return response.data.quizData
+    }catch(error){
+        if(axios.isAxiosError(error)){
+            const serverError = (error as AxiosError<ServerError>)
+            if(serverError && serverError.response){
+                return serverError.response.data
             }
+        }else{
+            return {errorMessage:"Something went wrong"}
         }
     }
+}
+
+export function QuizProvider({children}){
+
+    const [quiz,setQuiz] = useState<QuizType[] | undefined>()
+    const [error,setError] = useState<ServerError>()
+
+    getQuiz()
 
     useEffect(()=>{
         (
             async function(){
-                const quizData = await getQuiz()
+                const quizData:QuizType[] | ServerError = await getQuiz()
                 if("errorMessage" in quizData)
                     setError(error) 
                 else{
@@ -41,7 +43,7 @@ export function QuizProvider({children}){
             }
         )()
     },[error])
-
+    
     return(
     <QuizContext.Provider value={{quiz}}>
         {children}

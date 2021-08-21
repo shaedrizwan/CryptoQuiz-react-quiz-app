@@ -7,12 +7,12 @@ import "./quiz.css"
 
 
 export function QuizComponent({id}){
-    const {quiz} = useQuiz()
+    const {quiz}:{quiz:QuizType[]} = useQuiz()
     const navigate = useNavigate()
-    const {score,setScore} = useScore()
+    const {score,setScore}:{score:number,setScore:React.Dispatch<React.SetStateAction<number>>} = useScore()
     const [questionNum,setQuestionNum] = useState<number>(0)
-    const selectedQuiz:QuizType = quiz.quizData.find(item => item._id === id)
-    const totalQestions = selectedQuiz.questions.length
+    const selectedQuiz:QuizType = quiz.find(item => item._id === id)
+    const totalQuestions:number = selectedQuiz.questions.length
 
     useEffect(()=>{
         setScore(0)
@@ -22,7 +22,7 @@ export function QuizComponent({id}){
         if(option){
             setScore((score:number)=> score + 5)
         }
-        if(questionNum < totalQestions-1){
+        if(questionNum < totalQuestions-1){
             setQuestionNum((questionNum:number)=>questionNum+1)
         }else{
             navigate(`/result/${id}`)

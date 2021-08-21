@@ -9,7 +9,6 @@ export const useScore = () =>{
 export const ScoreProvider = ({children}) =>{
 
     const [score,setScore] = useState<number>(0)
-    // const [finalScore,setFinalScore] =useState<number>(0)
 
     return(
         <scoreContext.Provider value={{score,setScore}}>
