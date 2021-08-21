@@ -3,11 +3,13 @@ export type ServerError = {
 }
 
 export type OptionsType = {
+    _id:string;
     option:string;
     isRight:boolean;
 }
 
 export type QuestionsType = {
+    _id:string;
     question:string;
     options: OptionsType[];
 }
