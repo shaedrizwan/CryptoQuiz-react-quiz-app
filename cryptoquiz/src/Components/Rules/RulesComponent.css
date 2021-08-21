@@ -11,6 +11,7 @@
 .rules-title{
     font-size: 2rem;
     font-weight: bold;
+    text-align: center;
 }
 
 .rules-items{
@@ -24,4 +25,11 @@
     padding: 0.5rem;
     border-radius: 10px;
     align-self: center;
+}
+
+@media(max-width:800px){
+    .rules{
+        max-width: 60%;
+        /* margin:0; */
+    }
 }

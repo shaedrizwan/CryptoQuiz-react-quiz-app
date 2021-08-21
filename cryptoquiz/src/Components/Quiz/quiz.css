@@ -1,8 +1,3 @@
-/* .quiz-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
 
 .score-card{
     display: flex;
@@ -54,4 +49,17 @@
     padding: 15px 10px;
     cursor: pointer;
     border-radius: 10px;
+}
+
+@media(max-width:800px){
+    .question{
+        padding-bottom: 10px;
+        font-size: 1.2rem;
+    }
+
+    .option{
+        font-size: 1rem;
+        padding-left: 20px;
+        width: 80%;
+    }
 }

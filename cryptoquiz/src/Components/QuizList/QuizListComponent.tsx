@@ -2,6 +2,7 @@ import { useQuiz } from "../../Contexts/quizContext"
 import { Link } from "react-router-dom"
 import "./QuizListComponent.css"
 import { QuizType } from "../../Types/quizContext"
+import "../../softui.css"
 
 
 export function QuizListComponent(){
@@ -15,9 +16,9 @@ export function QuizListComponent(){
             <div className="quizlist-grid">
                 {quiz && quiz.map(({_id,name,description}) => {
                     return (
-                    <Link className="quizlist-items" to={`/rules/${_id}`} key={_id}>
-                        <div className="quizlist-name">{name}</div>
-                        <div className="quizlist-description">{description}</div>
+                    <Link className="card card-pr" to={`/rules/${_id}`} key={_id}>
+                        <div className="card-heading">{name}</div>
+                        <div className="card-body">{description}</div>
                     </Link>
                     )
                 })}

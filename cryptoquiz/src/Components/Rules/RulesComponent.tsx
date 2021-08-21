@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
 import "./RulesComponent.css"
 import { Id } from "../../Types/quiz"
+import "../../softui.css"
 
 export function RulesComponent({id}:Id){
     return(
-        <div className="rules">
+        <div className="card card-pr">
             <div className="rules-div">
                 <div className="rules-title">Quiz Rules</div>
                 <ol>
@@ -16,7 +17,7 @@ export function RulesComponent({id}:Id){
                 </ol>
             </div>
             <div className="leaderboard-div"></div>
-            <Link to={`/quiz/${id}`} className="quiz-button">Start Quiz</Link>
+            <Link to={`/quiz/${id}`} className="btn btn-scs">Start Quiz</Link>
         </div>
     )
 }
