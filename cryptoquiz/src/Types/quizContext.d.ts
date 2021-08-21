@@ -13,11 +13,13 @@ export type QuestionsType = {
 }
 
 export type QuizType = {
+    _id?:string;
     name:string;
+    description:string;
     totalQuestions:number;
     questions:QuestionsType[];
 }
 export type QuizData = {
     success:boolean;
-    quizData:Quiz[];
+    quizData:QuizType[];
 }
