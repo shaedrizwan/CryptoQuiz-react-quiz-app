@@ -4,6 +4,7 @@ import { useQuiz } from "../../Contexts/quizContext"
 import { useScore } from "../../Contexts/scoreContext"
 import { QuizType } from "../../Types/quizContext"
 import "./quiz.css"
+import "../../softui.css"
 
 
 export function QuizComponent({id}){
@@ -13,19 +14,55 @@ export function QuizComponent({id}){
     const [questionNum,setQuestionNum] = useState<number>(0)
     const selectedQuiz:QuizType = quiz.find(item => item._id === id)
     const totalQuestions:number = selectedQuiz.questions.length
+    const [style,setStyle] = useState({status:false,selected:""})
+    
+
+    // const resetTimer = () =>{
+    //     setTimer(5)
+    // }
 
     useEffect(()=>{
         setScore(0)
     },[])
 
-    function answerHandler(option:Boolean){
-        if(option){
-            setScore((score:number)=> score + 5)
+    // useEffect(()=>{
+    //     if(timer > 0){
+    //         setTimeout(()=>setTimer(timer =>timer -1), 1000);
+    //     }
+    //     if(timer === 0){
+    //         if(questionNum < totalQuestions-1){
+    //             setQuestionNum((questionNum)=>questionNum+1)
+    //             resetTimer()
+    //         }else{
+    //             navigate(`/result/${id}`)
+    //         }
+    //     }
+    // },[setTimer,timer])
+
+    function answerHandler({option,id}:{option:boolean,id:string}){
+        setStyle({...style,status:true,selected:id})
+        setTimeout(()=>{
+            if(option){
+                setScore((score:number)=> score + 5)
+            }
+            if(questionNum < totalQuestions-1){
+                setStyle({...style,status:false,selected:""})
+                setQuestionNum((questionNum:number)=>questionNum+1)
+                // resetTimer()
+            }else{
+                navigate(`/result/${selectedQuiz._id}`)
+            }
+        },500)
+    }
+
+    const updateStyle = (isRight,id) =>{
+        if(isRight){
+            return {backgroundColor:"#68C086"}
+        }else if(!isRight && style.selected === id){
+            return {backgroundColor:"#E82929"}
         }
-        if(questionNum < totalQuestions-1){
-            setQuestionNum((questionNum:number)=>questionNum+1)
-        }else{
-            navigate(`/result/${id}`)
+        else{
+            return {backgroundColor:"#white"}
         }
     }
 
@@ -33,15 +70,15 @@ export function QuizComponent({id}){
         <div className="quiz-container">
             <div className="score-card">
                 <div className="quiz-data">Question number:{questionNum + 1}</div>
-                <div className="quiz-data">Timer</div>
+                <div className="quiz-data"></div>
                 <div className="quiz-data">Score: {score}</div>
             </div>
-            <div className="quiz-card">
+            <div className="card card-pr">
                 <div className="quiz-question">Question:</div>
                 <div className="question">{selectedQuiz.questions[questionNum].question}</div>
                 <div className="quiz-option-text">Options:</div>
                 {selectedQuiz.questions[questionNum].options.map(opt=>{
-                    return <div className="option" key={opt.option} onClick={()=>answerHandler(opt.isRight)}>{opt.option}</div>
+                    return <div className="option" key={opt._id} style={style.status?updateStyle(opt.isRight,opt._id):{backgroundColor:"white"}} onClick={()=>answerHandler({option:opt.isRight,id:opt._id})}>{opt.option}</div>
                 })}
             </div>
         </div>
